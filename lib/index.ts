@@ -12,6 +12,18 @@ export type Token = string;
 
 export class Registry extends Map<Token, RegistryEntry<any>> {}
 
+export class NoSuchEntryError extends Error {
+  constructor(public token: Token) {
+    super(`Token '${token}' not found in registry.`);
+  }
+}
+
+export class NoProviderError extends Error {
+  constructor(public entry: RegistryEntry<any>) {
+    super('No provider given for registry entry.');
+  }
+}
+
 export class RegistryEntry<T> {
   private scope: Scope;
   private instance?: T;
@@ -30,6 +42,10 @@ export class RegistryEntry<T> {
     return this;
   }
 
+  getScope(): Scope {
+    return this.scope;
+  }
+
   getInstance(): T {
     if (this.instance) return this.instance;
 
@@ -39,7 +55,7 @@ export class RegistryEntry<T> {
       return this.provide.useValue;
     }
 
-    throw new Error('No provider given for registry entry.');
+    throw new NoProviderError(this);
   }
 }
 
@@ -63,7 +79,7 @@ export class Container {
   resolve<T>(token: Token): T {
     const entry = this.registry.get(token);
     if (!entry) {
-      throw new Error('Token not found in registry.');
+      throw new NoSuchEntryError(token);
     }
 
     return entry.getInstance() as T;
