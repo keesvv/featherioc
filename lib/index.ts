@@ -72,6 +72,10 @@ export class IocContainer {
   getRegistry(): Readonly<IocRegistry> {
     return Object.freeze(this.registry);
   }
+
+  clearRegistry(): void {
+    this.registry.clear();
+  }
 }
 
 export const container = new IocContainer();

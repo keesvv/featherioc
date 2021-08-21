@@ -10,7 +10,11 @@ class Logger implements ILogger {
   }
 }
 
-test('bind ILogger to concrete Logger class', () => {
+beforeEach(() => {
+  container.clearRegistry();
+});
+
+test('bind interface to concrete class', () => {
   container.bind<ILogger>('Logger', { useClass: Logger });
   expect(container.getRegistry().has('Logger')).toBe(true);
 });
