@@ -4,8 +4,11 @@
   "author": "Kees van Voorthuizen <me@keesvv.nl>",
   "repository": "https://github.com/keesvv/tinyioc",
   "description": "A tiny Inversion-of-Control Container for JS/TS.",
-  "main": "index.js",
+  "main": "dist/tinyioc.js",
   "license": "MIT",
+  "files": [
+    "dist/tinyioc.d.ts"
+  ],
   "scripts": {
     "build": "webpack",
     "test": "jest"
