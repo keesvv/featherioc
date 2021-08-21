@@ -44,7 +44,7 @@ export class IocRegistryEntry<T> {
 }
 
 export class IocContainer {
-  private registry: IocRegistry;
+  private readonly registry: IocRegistry;
 
   constructor() {
     this.registry = new IocRegistry();
@@ -67,6 +67,10 @@ export class IocContainer {
     }
 
     return entry.getInstance() as T;
+  }
+
+  getRegistry(): Readonly<IocRegistry> {
+    return Object.freeze(this.registry);
   }
 }
 
