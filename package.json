@@ -1,0 +1,8 @@
+{
+  "name": "tinyioc",
+  "version": "1.0.0",
+  "author": "Kees van Voorthuizen <me@keesvv.nl>",
+  "repository": "https://github.com/keesvv/tinyioc",
+  "main": "index.js",
+  "license": "MIT"
+}
