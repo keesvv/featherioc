@@ -15,19 +15,21 @@ Another reason for not having decorators is because they tend to clutter the cod
 
 **What's already supported?**
 
-- Container registry
-- Binding services
-- Binding multiple services at the same time
-- Scopes (Transient and Singleton)
-- `useClass` provider for services
-- `useValue` provider for services
-- Resolving services by token
+- [x] Container registry
+- [x] Binding services
+- [x] Binding multiple services at the same time
+- [x] Scopes (Transient and Singleton)
+- [x] `useClass` provider for services
+- [x] `useValue` provider for services
+- [x] Resolving services by token
 
 **What are you planning on supporting?**
 
-- Constructor injection
-- Property injection (not sure about this)
-- More stuff I can't think of at the moment
+- [ ] Constructor injection
+- [ ] Property injection (not sure about this)
+- [ ] Use `Symbol`s as tokens
+- [ ] `useFunction` provider for services
+- [ ] More stuff I can't think of at the moment
 
 ## Usage
 `// TODO:`
