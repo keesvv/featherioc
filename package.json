@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "Kees van Voorthuizen <me@keesvv.nl>",
   "repository": "https://github.com/keesvv/tinyioc",
+  "description": "A tiny Inversion-of-Control Container for JS/TS.",
   "main": "index.js",
   "license": "MIT"
 }
