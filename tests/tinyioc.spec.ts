@@ -1,4 +1,9 @@
-import { container, NoProviderError, NoSuchEntryError, Scope } from '../lib';
+import {
+  container,
+  NoProviderError,
+  NoSuchEntryError,
+  Scope,
+} from '../lib/tinyioc';
 
 interface ILogger {
   log(msg: string): void;

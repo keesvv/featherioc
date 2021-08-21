@@ -8,5 +8,5 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "files": ["lib/index.ts"]
+  "files": ["lib/tinyioc.ts"]
 }

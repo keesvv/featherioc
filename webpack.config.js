@@ -1,8 +1,8 @@
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './lib/index.ts',
+  entry: './lib/tinyioc.ts',
   output: {
-    filename: 'index.js',
+    filename: 'tinyioc.js',
     globalObject: 'this',
     library: {
       name: 'tinyioc',
