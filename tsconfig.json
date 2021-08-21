@@ -2,7 +2,9 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
+    "sourceMap": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "outDir": "dist"
   },
