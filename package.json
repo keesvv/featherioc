@@ -5,5 +5,13 @@
   "repository": "https://github.com/keesvv/tinyioc",
   "description": "A tiny Inversion-of-Control Container for JS/TS.",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "ts-node tests"
+  },
+  "devDependencies": {
+    "ts-node": "^10.2.1",
+    "typescript": "^4.3.5"
+  }
 }
