@@ -1,29 +1,29 @@
-export enum IocLifetime {
+export enum Scope {
   Transient,
   Singleton,
 }
 
-export type IocProvide<T> = {
+export type ProvideOpts<T> = {
   useClass?: new () => T;
   useValue?: T;
 };
 
-export type IocToken = string;
+export type Token = string;
 
-export class IocRegistry extends Map<IocToken, IocRegistryEntry<any>> {}
+export class Registry extends Map<Token, RegistryEntry<any>> {}
 
-export class IocRegistryEntry<T> {
-  private lifetime: IocLifetime;
+export class RegistryEntry<T> {
+  private scope: Scope;
   private instance?: T;
 
-  constructor(private provide: IocProvide<T>) {
-    this.lifetime = IocLifetime.Transient;
+  constructor(private provide: ProvideOpts<T>) {
+    this.scope = Scope.Transient;
   }
 
-  setLifetime(lifetime: IocLifetime): this {
-    this.lifetime = lifetime;
+  setScope(scope: Scope): this {
+    this.scope = scope;
 
-    if (this.lifetime === IocLifetime.Singleton) {
+    if (this.scope === Scope.Singleton) {
       this.instance = this.getInstance();
     }
 
@@ -43,15 +43,15 @@ export class IocRegistryEntry<T> {
   }
 }
 
-export class IocContainer {
-  private readonly registry: IocRegistry;
+export class Container {
+  private readonly registry: Registry;
 
   constructor() {
-    this.registry = new IocRegistry();
+    this.registry = new Registry();
   }
 
-  bind<T>(token: IocToken, provide: IocProvide<T>): IocRegistryEntry<T> {
-    const entry = new IocRegistryEntry<T>(provide);
+  bind<T>(token: Token, provide: ProvideOpts<T>): RegistryEntry<T> {
+    const entry = new RegistryEntry<T>(provide);
     this.registry.set(token, entry);
     return entry;
   }
@@ -60,7 +60,7 @@ export class IocContainer {
     fn(this.bind.bind(this));
   }
 
-  resolve<T>(token: IocToken): T {
+  resolve<T>(token: Token): T {
     const entry = this.registry.get(token);
     if (!entry) {
       throw new Error('Token not found in registry.');
@@ -69,7 +69,7 @@ export class IocContainer {
     return entry.getInstance() as T;
   }
 
-  getRegistry(): Readonly<IocRegistry> {
+  getRegistry(): Readonly<Registry> {
     return Object.freeze(this.registry);
   }
 
@@ -78,4 +78,4 @@ export class IocContainer {
   }
 }
 
-export const container = new IocContainer();
+export const container = new Container();
