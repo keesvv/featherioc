@@ -9,6 +9,13 @@ jobs:
         run: yarn
       - name: Run tests
         run: yarn test
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-final.json
+          flags: unittests
+          fail_ci_if_error: true
+          verbose: true
   lint:
     runs-on: ubuntu-latest
     steps:
