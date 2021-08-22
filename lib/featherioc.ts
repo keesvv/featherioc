@@ -6,6 +6,7 @@ export enum Scope {
 export type ProvideOpts<T> = {
   useClass?: new () => T;
   useValue?: T;
+  useFunction?: () => T;
 };
 
 export type Token = string | symbol;
@@ -48,6 +49,8 @@ export class RegistryEntry<T> {
   }
 
   getInstance(): T {
+    // TODO: refactor this method
+
     if (this.instance) return this.instance;
 
     if (this.provide.useClass) {
@@ -56,6 +59,10 @@ export class RegistryEntry<T> {
 
     if (this.provide.useValue) {
       return this.provide.useValue;
+    }
+
+    if (this.provide.useFunction) {
+      return this.provide.useFunction();
     }
 
     throw new NoProviderError(this);

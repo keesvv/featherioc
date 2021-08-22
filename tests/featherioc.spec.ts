@@ -65,10 +65,18 @@ test('resolve a singleton dependency', () => {
   expect(container.resolve<ILogger>('Logger')).toBeInstanceOf(Logger);
 });
 
-test('resolve a dependency with a constant value', () => {
+test('resolve a dependency with a value provider', () => {
   container.bind<string>('TestString', { useValue: 'Test string' });
 
   expect(container.resolve<string>('TestString')).toBe('Test string');
+});
+
+test('resolve a dependency with a function provider', () => {
+  container.bind<string>('Version', {
+    useFunction: () => process.version,
+  });
+
+  expect(container.resolve<string>('Version')).toBe(process.version);
 });
 
 test('resolve a non-existent dependency', () => {

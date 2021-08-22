@@ -25,6 +25,7 @@ Another reason for not having decorators is because they tend to clutter the cod
 - [x] Scopes (Transient and Singleton)
 - [x] `useClass` provider for services
 - [x] `useValue` provider for services
+- [x] `useFunction` provider for services
 - [x] Resolving services by token
 - [x] Use `Symbol`s as tokens
 
@@ -32,7 +33,6 @@ Another reason for not having decorators is because they tend to clutter the cod
 
 - [ ] Constructor injection
 - [ ] Property injection (not sure about this)
-- [ ] `useFunction` provider for services
 - [ ] More stuff I can't think of at the moment
 
 ## Usage
