@@ -32,8 +32,11 @@ Another reason for not having decorators is because they tend to clutter the cod
 
 **What are you planning on supporting?**
 
-- [ ] Property injection (not sure about this)
 - [ ] More stuff I can't think of at the moment
+
+**What are you \*not\* planning on supporting?**
+
+- Property injection
 
 ## Usage
 `// TODO:`
