@@ -37,9 +37,31 @@ Another reason for not having decorators is because they tend to clutter the cod
 **What are you \*not\* planning on supporting?**
 
 - Property injection
+- Decorators
 
-## Usage
-`// TODO:`
+## Example
+```ts
+import { container } from 'featherioc';
+
+export interface ILogger {
+  log(msg: string): void;
+}
+
+export class Logger implements ILogger {
+  log(msg: string): void {
+    console.log(msg);
+  }
+}
+
+// Binding a service
+container.bind<ILogger>('Logger', { useClass: Logger });
+
+// Resolving a service
+const logger = container.resolve<ILogger>('Logger');
+logger.log('Hello, world!');
+```
+
+> I will further extend this section soon.
 
 ## Author
 Kees van Voorthuizen
