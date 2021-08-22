@@ -25,7 +25,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.spec.ts'],
+      files: ['*.spec.ts', 'tests/**/*.ts'],
       rules: {
         'jsdoc/require-jsdoc': 'off',
       },

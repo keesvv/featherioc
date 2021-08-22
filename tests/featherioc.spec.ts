@@ -1,20 +1,10 @@
+import { ILogger, Logger } from './util';
 import {
   container,
   NoProviderError,
   NoSuchEntryError,
   Scope,
 } from '../lib/featherioc';
-
-interface ILogger {
-  log(msg: string): void;
-}
-
-class Logger implements ILogger {
-  log(msg: string): void {
-    // eslint-disable-next-line no-console
-    console.log(msg);
-  }
-}
 
 beforeEach(() => {
   container.clearRegistry();
