@@ -1,13 +1,13 @@
 {
-  "name": "tinyioc",
+  "name": "featherioc",
   "version": "1.0.0",
   "author": "Kees van Voorthuizen <me@keesvv.nl>",
-  "repository": "https://github.com/keesvv/tinyioc",
+  "repository": "https://github.com/keesvv/featherioc",
   "description": "A tiny Inversion-of-Control Container for JS/TS.",
-  "main": "dist/tinyioc.js",
+  "main": "dist/featherioc.js",
   "license": "MIT",
   "files": [
-    "dist/tinyioc.d.ts"
+    "dist/featherioc.d.ts"
   ],
   "scripts": {
     "build": "webpack",

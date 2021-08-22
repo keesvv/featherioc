@@ -3,7 +3,7 @@ import {
   NoProviderError,
   NoSuchEntryError,
   Scope,
-} from '../lib/tinyioc';
+} from '../lib/featherioc';
 
 interface ILogger {
   log(msg: string): void;

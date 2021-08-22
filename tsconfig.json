@@ -8,5 +8,5 @@
     "declaration": true,
     "outDir": "dist"
   },
-  "files": ["lib/tinyioc.ts"]
+  "files": ["lib/featherioc.ts"]
 }

@@ -1,13 +1,13 @@
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './lib/tinyioc.ts',
+  entry: './lib/featherioc.ts',
   output: {
-    filename: 'tinyioc.js',
+    filename: 'featherioc.js',
     globalObject: 'this',
     library: {
-      name: 'tinyioc',
-      type: 'umd'
-    }
+      name: 'featherioc',
+      type: 'umd',
+    },
   },
   module: {
     rules: [
@@ -17,5 +17,5 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
-  }
+  },
 };
