@@ -2,7 +2,7 @@ import { ILogger, Logger, TestService } from './util';
 import {
   container,
   NoProviderError,
-  NoSuchEntryError,
+  NoSuchServiceError,
   Scope,
 } from '../lib/featherioc';
 
@@ -10,12 +10,12 @@ beforeEach(() => {
   container.clearRegistry();
 });
 
-test('bind interface to concrete class', () => {
+test('bind service to class', () => {
   container.bind<ILogger>('Logger', { useClass: Logger });
   expect(container.getRegistry().has('Logger')).toBe(true);
 });
 
-test('bind interface to concrete class in singleton scope', () => {
+test('bind service to class in singleton scope', () => {
   container
     .bind<ILogger>('Logger', { useClass: Logger })
     .setScope(Scope.Singleton);
@@ -25,13 +25,13 @@ test('bind interface to concrete class in singleton scope', () => {
   );
 });
 
-test('bind value with symbol as token', () => {
+test('bind service with symbol as token', () => {
   const testSymbol = Symbol.for('test');
   container.bind<string>(testSymbol, { useValue: 'Test!' });
   expect(container.resolve<string>(testSymbol)).toBe('Test!');
 });
 
-test('bind multiple at the same time', () => {
+test('bind multiple services at the same time', () => {
   container.bindMany((bind) => {
     bind('Key1', { useValue: 'Val1' });
     bind('Key2', { useValue: 'Val2' });
@@ -42,8 +42,16 @@ test('bind multiple at the same time', () => {
   );
 });
 
-test('resolve a dependency', () => {
+test('resolve a service', () => {
   container.bind<ILogger>('Logger', { useClass: Logger });
+  expect(container.resolve<ILogger>('Logger')).toBeInstanceOf(Logger);
+});
+
+test('resolve a singleton service', () => {
+  container
+    .bind<ILogger>('Logger', { useClass: Logger })
+    .setScope(Scope.Singleton);
+
   expect(container.resolve<ILogger>('Logger')).toBeInstanceOf(Logger);
 });
 
@@ -59,21 +67,13 @@ test('resolve a service with a dependency', () => {
   );
 });
 
-test('resolve a singleton dependency', () => {
-  container
-    .bind<ILogger>('Logger', { useClass: Logger })
-    .setScope(Scope.Singleton);
-
-  expect(container.resolve<ILogger>('Logger')).toBeInstanceOf(Logger);
-});
-
-test('resolve a dependency with a value provider', () => {
+test('resolve a service with a value provider', () => {
   container.bind<string>('TestString', { useValue: 'Test string' });
 
   expect(container.resolve<string>('TestString')).toBe('Test string');
 });
 
-test('resolve a dependency with a function provider', () => {
+test('resolve a service with a function provider', () => {
   container.bind<string>('Version', {
     useFunction: () => process.version,
   });
@@ -81,11 +81,11 @@ test('resolve a dependency with a function provider', () => {
   expect(container.resolve<string>('Version')).toBe(process.version);
 });
 
-test('resolve a non-existent dependency', () => {
-  expect(() => container.resolve('Something')).toThrow(NoSuchEntryError);
-});
-
-test('resolve a dependency without a provider', () => {
+test('resolve a service without a provider', () => {
   container.bind<ILogger>('Logger', {});
   expect(() => container.resolve('Logger')).toThrow(NoProviderError);
+});
+
+test('resolve a non-existent service', () => {
+  expect(() => container.resolve('Something')).toThrow(NoSuchServiceError);
 });

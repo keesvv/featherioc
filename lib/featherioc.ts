@@ -33,9 +33,9 @@ export type ProvideOpts<T> = {
 
 export type Token = string | symbol;
 
-export class Registry extends Map<Token, RegistryEntry> {}
+export class Registry extends Map<Token, Service> {}
 
-export class NoSuchEntryError extends Error {
+export class NoSuchServiceError extends Error {
   /**
    * Thrown when a service could not be located in
    * the container using the specified token.
@@ -54,12 +54,12 @@ export class NoProviderError extends Error {
    *
    * @param service The service in question.
    */
-  constructor(public service: RegistryEntry) {
-    super('No provider given for registry entry.');
+  constructor(public service: Service) {
+    super('No provider given for this service.');
   }
 }
 
-export class RegistryEntry<T = unknown> {
+export class Service<T = unknown> {
   private scope: Scope;
 
   private instance?: T;
@@ -67,7 +67,7 @@ export class RegistryEntry<T = unknown> {
   /**
    * A service that can be registered in a container.
    *
-   * @param container The container this entry belongs to.
+   * @param container The container this service belongs to.
    * @param provide Options for the provider.
    */
   constructor(private container: Container, private provide: ProvideOpts<T>) {
@@ -106,7 +106,7 @@ export class RegistryEntry<T = unknown> {
 
     if (this.provide.useClass) {
       const tokens = this.provide.dependencies || [];
-      const dependencies = tokens.map<RegistryEntry>((token) =>
+      const dependencies = tokens.map<Service>((token) =>
         this.container.resolve(token),
       );
 
@@ -141,10 +141,10 @@ export class Container {
    * @param token The service token to use.
    * @param provide Options for the provider.
    */
-  bind<T>(token: Token, provide: ProvideOpts<T>): RegistryEntry<T> {
-    const entry = new RegistryEntry<T>(this, provide);
-    this.registry.set(token, entry);
-    return entry;
+  bind<T>(token: Token, provide: ProvideOpts<T>): Service<T> {
+    const service = new Service<T>(this, provide);
+    this.registry.set(token, service);
+    return service;
   }
 
   /**
@@ -158,18 +158,18 @@ export class Container {
   }
 
   /**
-   * Locates a dependency in the container using the
+   * Locates a service in the container using the
    * given token and resolves it.
    *
    * @param token The service token to use.
    */
   resolve<T>(token: Token): T {
-    const entry = this.registry.get(token);
-    if (!entry) {
-      throw new NoSuchEntryError(token);
+    const service = this.registry.get(token);
+    if (!service) {
+      throw new NoSuchServiceError(token);
     }
 
-    return entry.getInstance() as T;
+    return service.getInstance() as T;
   }
 
   /**
