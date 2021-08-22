@@ -15,7 +15,8 @@ export type ProvideOpts<T> = {
   /**
    * Class provider.
    */
-  useClass?: new () => T;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useClass?: new (...args: any[]) => T;
   /**
    * Constant value provider.
    */
@@ -24,11 +25,15 @@ export type ProvideOpts<T> = {
    * Function provider.
    */
   useFunction?: () => T;
+  /**
+   * The dependencies to inject in the service.
+   */
+  dependencies?: Token[];
 };
 
 export type Token = string | symbol;
 
-export class Registry extends Map<Token, RegistryEntry<unknown>> {}
+export class Registry extends Map<Token, RegistryEntry> {}
 
 export class NoSuchEntryError extends Error {
   /**
@@ -49,12 +54,12 @@ export class NoProviderError extends Error {
    *
    * @param service The service in question.
    */
-  constructor(public service: RegistryEntry<unknown>) {
+  constructor(public service: RegistryEntry) {
     super('No provider given for registry entry.');
   }
 }
 
-export class RegistryEntry<T> {
+export class RegistryEntry<T = unknown> {
   private scope: Scope;
 
   private instance?: T;
@@ -62,9 +67,10 @@ export class RegistryEntry<T> {
   /**
    * A service that can be registered in a container.
    *
+   * @param container The container this entry belongs to.
    * @param provide Options for the provider.
    */
-  constructor(private provide: ProvideOpts<T>) {
+  constructor(private container: Container, private provide: ProvideOpts<T>) {
     this.scope = Scope.Transient;
   }
 
@@ -99,7 +105,12 @@ export class RegistryEntry<T> {
     if (this.instance) return this.instance;
 
     if (this.provide.useClass) {
-      return new this.provide.useClass();
+      const tokens = this.provide.dependencies || [];
+      const dependencies = tokens.map<RegistryEntry>((token) =>
+        this.container.resolve(token),
+      );
+
+      return new this.provide.useClass(...dependencies);
     }
 
     if (this.provide.useValue) {
@@ -131,7 +142,7 @@ export class Container {
    * @param provide Options for the provider.
    */
   bind<T>(token: Token, provide: ProvideOpts<T>): RegistryEntry<T> {
-    const entry = new RegistryEntry<T>(provide);
+    const entry = new RegistryEntry<T>(this, provide);
     this.registry.set(token, entry);
     return entry;
   }

@@ -1,4 +1,4 @@
-import { ILogger, Logger } from './util';
+import { ILogger, Logger, TestService } from './util';
 import {
   container,
   NoProviderError,
@@ -45,6 +45,18 @@ test('bind multiple at the same time', () => {
 test('resolve a dependency', () => {
   container.bind<ILogger>('Logger', { useClass: Logger });
   expect(container.resolve<ILogger>('Logger')).toBeInstanceOf(Logger);
+});
+
+test('resolve a service with a dependency', () => {
+  container.bind<ILogger>('Logger', { useClass: Logger });
+  container.bind<TestService>('TestService', {
+    useClass: TestService,
+    dependencies: ['Logger'],
+  });
+
+  expect(container.resolve<TestService>('TestService').doSomething()).toBe(
+    '[LOG] Something',
+  );
 });
 
 test('resolve a singleton dependency', () => {

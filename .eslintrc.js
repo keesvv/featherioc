@@ -34,6 +34,7 @@ module.exports = {
   rules: {
     'prettier/prettier': 'error',
     'max-classes-per-file': 'off',
+    'no-useless-constructor': 'off',
     'no-shadow': 'off',
     'new-cap': 'off',
     'no-use-before-define': 'off',
