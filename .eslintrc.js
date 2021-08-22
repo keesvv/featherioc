@@ -4,13 +4,18 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ['airbnb-base', 'prettier', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'airbnb-base',
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:jsdoc/recommended',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint', 'prettier', 'jsdoc'],
   settings: {
     'import/resolver': {
       node: {
@@ -25,6 +30,8 @@ module.exports = {
     'new-cap': 'off',
     'no-use-before-define': 'off',
     'class-methods-use-this': 'off',
+    'jsdoc/require-returns': 'off',
+    'jsdoc/require-param-type': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
