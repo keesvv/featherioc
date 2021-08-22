@@ -23,6 +23,14 @@ module.exports = {
       },
     },
   },
+  overrides: [
+    {
+      files: ['*.spec.ts'],
+      rules: {
+        'jsdoc/require-jsdoc': 'off',
+      },
+    },
+  ],
   rules: {
     'prettier/prettier': 'error',
     'max-classes-per-file': 'off',
@@ -32,6 +40,14 @@ module.exports = {
     'class-methods-use-this': 'off',
     'jsdoc/require-returns': 'off',
     'jsdoc/require-param-type': 'off',
+    'jsdoc/require-jsdoc': [
+      'warn',
+      {
+        require: {
+          MethodDefinition: true,
+        },
+      },
+    ],
     'import/extensions': [
       'error',
       'ignorePackages',
