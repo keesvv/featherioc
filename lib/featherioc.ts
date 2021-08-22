@@ -55,7 +55,26 @@ export class NoProviderError extends Error {
    * @param service The service in question.
    */
   constructor(public service: Service) {
-    super('No provider given for this service.');
+    super(`No provider given for service '${service.token.toString()}'.`);
+  }
+}
+
+export class MissingDependenciesError extends Error {
+  /**
+   * Thrown when a service has missing dependencies.
+   *
+   * @param service The service in question.
+   * @param passedCount The amount of passed dependencies.
+   * @param expectedCount The amount of expected dependencies.
+   */
+  constructor(
+    public service: Service,
+    public passedCount: number,
+    public expectedCount: number,
+  ) {
+    super(
+      `Service '${service.token.toString()}' has missing dependencies (got ${passedCount}, expected ${expectedCount}).`,
+    );
   }
 }
 
@@ -69,8 +88,13 @@ export class Service<T = unknown> {
    *
    * @param container The container this service belongs to.
    * @param provide Options for the provider.
+   * @param token The service token used to register this service.
    */
-  constructor(private container: Container, private provide: ProvideOpts<T>) {
+  constructor(
+    private container: Container,
+    private provide: ProvideOpts<T>,
+    public readonly token: Token,
+  ) {
     this.scope = Scope.Transient;
   }
 
@@ -106,9 +130,19 @@ export class Service<T = unknown> {
 
     if (this.provide.useClass) {
       const tokens = this.provide.dependencies || [];
+      const expectedCount = this.provide.useClass.length;
       const dependencies = tokens.map<Service>((token) =>
         this.container.resolve(token),
       );
+
+      // Too few dependencies passed
+      if (dependencies.length < expectedCount) {
+        throw new MissingDependenciesError(
+          this,
+          dependencies.length,
+          expectedCount,
+        );
+      }
 
       return new this.provide.useClass(...dependencies);
     }
@@ -142,7 +176,7 @@ export class Container {
    * @param provide Options for the provider.
    */
   bind<T>(token: Token, provide: ProvideOpts<T>): Service<T> {
-    const service = new Service<T>(this, provide);
+    const service = new Service<T>(this, provide, token);
     this.registry.set(token, service);
     return service;
   }

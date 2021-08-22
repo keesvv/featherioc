@@ -1,6 +1,7 @@
 import { ILogger, Logger, TestService } from './util';
 import {
   container,
+  MissingDependenciesError,
   NoProviderError,
   NoSuchServiceError,
   Scope,
@@ -64,6 +65,16 @@ test('resolve a service with a dependency', () => {
 
   expect(container.resolve<TestService>('TestService').doSomething()).toBe(
     '[LOG] Something',
+  );
+});
+
+test('resolve a service with missing dependencies', () => {
+  container.bind<TestService>('TestService', {
+    useClass: TestService,
+  });
+
+  expect(() => container.resolve<TestService>('TestService')).toThrow(
+    MissingDependenciesError,
   );
 });
 
