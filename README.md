@@ -26,12 +26,12 @@ Another reason for not having decorators is because they tend to clutter the cod
 - [x] `useClass` provider for services
 - [x] `useValue` provider for services
 - [x] Resolving services by token
+- [x] Use `Symbol`s as tokens
 
 **What are you planning on supporting?**
 
 - [ ] Constructor injection
 - [ ] Property injection (not sure about this)
-- [ ] Use `Symbol`s as tokens
 - [ ] `useFunction` provider for services
 - [ ] More stuff I can't think of at the moment
 

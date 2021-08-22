@@ -35,6 +35,12 @@ test('bind interface to concrete class in singleton scope', () => {
   );
 });
 
+test('bind value with symbol as token', () => {
+  const testSymbol = Symbol.for('test');
+  container.bind<string>(testSymbol, { useValue: 'Test!' });
+  expect(container.resolve<string>(testSymbol)).toBe('Test!');
+});
+
 test('bind multiple at the same time', () => {
   container.bindMany((bind) => {
     bind('Key1', { useValue: 'Val1' });

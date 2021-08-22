@@ -8,13 +8,13 @@ export type ProvideOpts<T> = {
   useValue?: T;
 };
 
-export type Token = string;
+export type Token = string | symbol;
 
 export class Registry extends Map<Token, RegistryEntry<unknown>> {}
 
 export class NoSuchEntryError extends Error {
   constructor(public token: Token) {
-    super(`Token '${token}' not found in registry.`);
+    super(`Token '${token.toString()}' not found in registry.`);
   }
 }
 
