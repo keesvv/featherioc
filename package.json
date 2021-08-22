@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "webpack",
+    "build:prod": "cross-env NODE_ENV=production yarn build",
     "test": "jest",
     "lint": "eslint {lib,tests}/**/*.ts"
   },
@@ -22,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
     "babel-jest": "^27.0.6",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
