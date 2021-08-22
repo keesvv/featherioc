@@ -10,7 +10,7 @@ export type ProvideOpts<T> = {
 
 export type Token = string;
 
-export class Registry extends Map<Token, RegistryEntry<any>> {}
+export class Registry extends Map<Token, RegistryEntry<unknown>> {}
 
 export class NoSuchEntryError extends Error {
   constructor(public token: Token) {
@@ -19,13 +19,14 @@ export class NoSuchEntryError extends Error {
 }
 
 export class NoProviderError extends Error {
-  constructor(public entry: RegistryEntry<any>) {
+  constructor(public entry: RegistryEntry<unknown>) {
     super('No provider given for registry entry.');
   }
 }
 
 export class RegistryEntry<T> {
   private scope: Scope;
+
   private instance?: T;
 
   constructor(private provide: ProvideOpts<T>) {
@@ -51,7 +52,9 @@ export class RegistryEntry<T> {
 
     if (this.provide.useClass) {
       return new this.provide.useClass();
-    } else if (this.provide.useValue) {
+    }
+
+    if (this.provide.useValue) {
       return this.provide.useValue;
     }
 
