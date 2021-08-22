@@ -1,4 +1,8 @@
 # featherioc
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/keesvv/featherioc/CI?style=flat-square)
+![Codecov](https://img.shields.io/codecov/c/github/keesvv/featherioc?style=flat-square)
+![npm bundle size](https://img.shields.io/bundlephobia/min/featherioc?style=flat-square)
+
 A tiny (~1.5 KB) Inversion-of-Control Container for JS/TS.
 
 ## About
