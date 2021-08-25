@@ -1,13 +1,16 @@
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
-  entry: './lib/featherioc.ts',
+  entry: './lib/index.ts',
   output: {
-    filename: 'featherioc.js',
+    filename: 'index.js',
     globalObject: 'this',
     library: {
       name: 'featherioc',
       type: 'umd',
     },
+  },
+  resolve: {
+    extensions: ['.ts'],
   },
   module: {
     rules: [

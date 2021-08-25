@@ -5,7 +5,7 @@ import {
   NoProviderError,
   NoSuchServiceError,
   Scope,
-} from '../lib/featherioc';
+} from '../lib';
 
 beforeEach(() => {
   container.clearRegistry();

@@ -4,10 +4,10 @@
   "author": "Kees van Voorthuizen <me@keesvv.nl>",
   "repository": "https://github.com/keesvv/featherioc",
   "description": "A tiny Inversion-of-Control Container for JS/TS.",
-  "main": "dist/featherioc.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "files": [
-    "dist/featherioc.d.ts"
+    "dist"
   ],
   "scripts": {
     "build": "webpack",
