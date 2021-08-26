@@ -3,9 +3,15 @@
 ![Codecov](https://img.shields.io/codecov/c/github/keesvv/featherioc?style=flat-square)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/featherioc?style=flat-square)
 
-A tiny (~1.5 KB) Inversion-of-Control Container for JS/TS.
+A tiny (~2 KB) Inversion-of-Control Container for JS/TS.
 
 ## About
+**What's this exactly?**
+
+featherioc is an Inversion-of-Control (IoC) container. It allows you to easily build a dependency graph for
+your application and inject dependencies where needed. Using an IoC container enforces various SOLID principles
+and decouples your application, which is critical if you want your application to be testable and modular.
+
 **Why do we need yet _another_ IoC container library?**
 
 For Node-powered apps, [InversifyJS](https://github.com/inversify/InversifyJS) and [TSyringe](https://github.com/microsoft/tsyringe) among other libraries often do the job well enough.
